@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline"
   },
   logo: {
-    marginTop: -5,
+    marginTop: 0,
     resizeMode:'contain',
-    height: 110,
-    width: 110,
+    height: 120,
+    width: 120,
     marginLeft: 125,
   }
 })
