@@ -54,10 +54,9 @@ class App extends React.Component {
           alert("Invalid Username/Password")
         } else {
           this.setState({
-              loggedIn: true,
-              user: state.username
+              loggedIn: true
           })
-          console.log(data.user, this.state.loggedIn, data.token)
+          console.log(data.user.restaurants, this.state.loggedIn, data.token)
           _storeData = async () => {
             try {
               alert("storing")
@@ -67,11 +66,14 @@ class App extends React.Component {
               _storeData();
             }
           };
-        // this.navigation.navigate('Favorites')
-        console.log(AsyncStorage.getItem('token'))
+          this.setState({
+            user: data.user
+          })
+          console.log(data.user.restaurants.map(rest=>rest))
+
+          // {<Favorites user={data.user}/>}
         }
       })
-      // .catch(()=>alert("Oops, our app might be having an allergic reaction"))
   }
 
 
@@ -103,7 +105,7 @@ class App extends React.Component {
 
 render(){
   let restaurantComponents = this.state.restaurantsArray.map(rest => <Text style={styles.restList} key={rest.restaurant_id}>{rest.name}</Text>)
-
+  console.log(this.state.user.restaurants)
   return (
     <View style={styles.page}>
 
@@ -126,9 +128,15 @@ render(){
 
         <View style={styles.centerForm}>
         <Text></Text>
-        {this.state.memberAlready ? < Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/> : < Signup clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+      
+      {this.state.user !== "" ? 
+      <Favorites user={this.state.user}/> : 
+      this.state.memberAlready ? 
+      < Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/> : 
+      < Signup clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+
 {/* 
-        {this.state.favButtonClicked ? <Favorites /> : <RestaurantsContainer restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>} */}
+  {this.state.favButtonClicked ? <Favorites /> : <RestaurantsContainer restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>} */}
 
       </View>
 
