@@ -34,7 +34,7 @@ class RestaurantSpecs extends React.Component {
                     { this.props.obj.treenut ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Treenut</Text> : null}
                     { this.props.obj.eggs ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Egg</Text> : null}
                     <Text></Text>
-                    <Button title="Add to Favorites" icon={{name: "add", color: "white"}}/>
+                    <Button title="Add to Favorites" icon={{name: "add", color: "white"}} />
                 </Card>
         }
         </View>

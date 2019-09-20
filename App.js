@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
-import { SearchBar, Header } from 'react-native-elements'
+import { SearchBar, Header, Icon } from 'react-native-elements'
 // import Map from "./Map"
 import chewsyLogo from "./assets/chewsyLogo.png"
 import Login from "./Login"
@@ -9,14 +9,16 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Favorites from "./Favorites"
 import RestaurantsContainer from './RestaurantsContainer';
-
-
+// import { Icon } from 'react-native-material-ui'
 
 
 class App extends React.Component {
   state={
     restaurantsArray: [],
-    memberAlready: false
+    memberAlready: false,
+    favButtonClicked: false,
+    loggedIn: false,
+    user: ""
   }
 
   static navigationOptions = {
@@ -31,15 +33,10 @@ class App extends React.Component {
   }
 
 
-
-
-
-
   clickHandler=(state)=>{
       console.log(state.Object)
       let username = state.username
       let password = state.password
-      alert(username)
       fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
@@ -53,25 +50,35 @@ class App extends React.Component {
       })
       .then(response=>response.json())
       .then(data=>{
-        if (data.error){
+        if (data.token === undefined){
           alert("Invalid Username/Password")
         } else {
+          this.setState({
+              loggedIn: true,
+              user: state.username
+          })
+          console.log(data.user, this.state.loggedIn, data.token)
           _storeData = async () => {
             try {
               alert("storing")
               await AsyncStorage.setItem('token', data.token);
             } catch (error) {
               alert("storing error")
+              _storeData();
             }
           };
-        this.navigation.navigate('Favorites')
+        // this.navigation.navigate('Favorites')
+        console.log(AsyncStorage.getItem('token'))
         }
       })
-      .catch(()=>alert("Oops, our app might be having an allergic reaction"))
+      // .catch(()=>alert("Oops, our app might be having an allergic reaction"))
   }
 
 
-
+// Could pass data.user down as state and if its true then render each component as necessary
+// Maybe as a log out you would set up a clickhandler to go up to App and clear that state so that 
+// it would take you back to the log in page?
+// not sure if we should be using token 
 
 
 
@@ -83,9 +90,15 @@ class App extends React.Component {
   }
 
 
+  toggleDrawer=()=>{
+    alert("Shit I wish this side menu worked")
+  }
 
-
-
+  favButtonHandler=()=>{
+    this.setState({
+      favButtonClicked: !this.state.favButtonClicked
+    })
+  }
 
 
 render(){
@@ -95,21 +108,27 @@ render(){
     <View style={styles.page}>
 
       <Header style={styles.header}>
+      <Icon
+      color="#fff"
+      name="menu"
+      onPress={() => this.toggleDrawer()}
+    />
       <Image style={styles.logo} source={chewsyLogo}/>
+      {
+        this.state.favButtonClicked ? 
+        <Icon color="#fff" name="home" onPress={() => this.favButtonHandler()} /> : 
+        <Icon color="#fff" name="star" onPress={() => this.favButtonHandler()} />
+
+      }
+
+      />
       </Header>
 
         <View style={styles.centerForm}>
         <Text></Text>
-        {/* {this.state.memberAlready ? < Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/> : < Signup clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>} */}
-
-        {/* <Favorites /> */}
-        <RestaurantsContainer restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
-
-        {/* <Text style={styles.restListTitle} >Restaurant List</Text>
-        {restaurantComponents} */}
-        {/* <Map /> */}
-        {/* <SearchBar
-          placeholder='Type Here...' style={styles.searchbar}/> */}
+        {this.state.memberAlready ? < Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/> : < Signup clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+{/* 
+        {this.state.favButtonClicked ? <Favorites /> : <RestaurantsContainer restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>} */}
 
       </View>
 
@@ -172,7 +191,7 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
     height: 120,
     width: 120,
-    marginLeft: 125,
+    marginLeft: 15,
   }
 })
 
