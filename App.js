@@ -92,8 +92,13 @@ class App extends React.Component {
   }
 
 
-  toggleDrawer=()=>{
-    alert("Shit I wish this side menu worked")
+  logoutHandler=()=>{
+    alert("You have successfully logged out")
+    this.setState({
+      loggedIn: false,
+      user: ""
+    })
+    {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
   }
 
   favButtonHandler=(e)=>{
@@ -101,13 +106,12 @@ class App extends React.Component {
     this.setState({
       favButtonClicked: !this.state.favButtonClicked
     })
-    // route to name
   }
 
 
 render(){
-  let restaurantComponents = this.state.restaurantsArray.map(rest => <Text style={styles.restList} key={rest.restaurant_id}>{rest.name}</Text>)
-  console.log(this.state.user.restaurants)
+  // let restaurantComponents = this.state.restaurantsArray.map(rest => <Text style={styles.restList} key={rest.restaurant_id}>{rest.name}</Text>)
+  // console.log(this.state.user.restaurants)
 
   let favoriteComponents = this.state.favButtonClicked ? 
   <Favorites user={this.state.user}/> : 
@@ -117,17 +121,22 @@ render(){
     <View style={styles.page}>
 
       <Header style={styles.header}>
-      <Icon
-      color="#fff"
-      name="menu"
-      onPress={() => this.toggleDrawer()}
-    />
+      {
+          this.state.user == "" ? null :
+          <Icon
+          color="#fff"
+          name="exit"
+          onPress={() => this.logoutHandler()}
+          />
+        }
       <Image style={styles.logo} source={chewsyLogo}/>
       {
-        this.state.favButtonClicked ? 
-        <Icon color="#fff" name="home" onPress={this.favButtonHandler} /> :
-        <Icon color="#fff" name="star" onPress={() => this.favButtonHandler()} /> 
-      }
+          this.state.user == "" ? 
+          null :
+          this.state.favButtonClicked ? 
+          <Icon style={styles.icon} color="#fff" name="home" onPress={this.favButtonHandler} /> :
+          <Icon style={styles.icon} color="#fff" name="star" onPress={() => this.favButtonHandler()} /> 
+        }
 
       
       </Header>
@@ -213,4 +222,3 @@ const styles = StyleSheet.create({
 
 
 export default createAppContainer(AppNavigator);
-
