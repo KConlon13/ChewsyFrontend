@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView } from 'react-native';
-import { ThemeProvider, Text } from 'react-native-elements';
+import { ThemeProvider, Text, Header } from 'react-native-elements';
 import RestaurantsCard from './RestaurantsCard'
 
 

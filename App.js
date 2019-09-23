@@ -96,16 +96,23 @@ class App extends React.Component {
     alert("Shit I wish this side menu worked")
   }
 
-  favButtonHandler=()=>{
+  favButtonHandler=(e)=>{
+    // {name} = e.target
     this.setState({
       favButtonClicked: !this.state.favButtonClicked
     })
+    // route to name
   }
 
 
 render(){
   let restaurantComponents = this.state.restaurantsArray.map(rest => <Text style={styles.restList} key={rest.restaurant_id}>{rest.name}</Text>)
   console.log(this.state.user.restaurants)
+
+  let favoriteComponents = this.state.favButtonClicked ? 
+  <Favorites user={this.state.user}/> : 
+  <RestaurantsContainer user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
+
   return (
     <View style={styles.page}>
 
@@ -118,25 +125,21 @@ render(){
       <Image style={styles.logo} source={chewsyLogo}/>
       {
         this.state.favButtonClicked ? 
-        <Icon color="#fff" name="home" onPress={() => this.favButtonHandler()} /> : 
-        <Icon color="#fff" name="star" onPress={() => this.favButtonHandler()} />
-
+        <Icon color="#fff" name="home" onPress={this.favButtonHandler} /> :
+        <Icon color="#fff" name="star" onPress={() => this.favButtonHandler()} /> 
       }
 
-      />
+      
       </Header>
-
+        
         <View style={styles.centerForm}>
         <Text></Text>
       
       {this.state.user !== "" ? 
-      <Favorites user={this.state.user}/> : 
+      favoriteComponents :
       this.state.memberAlready ? 
       < Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/> : 
       < Signup clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
-
-{/* 
-  {this.state.favButtonClicked ? <Favorites /> : <RestaurantsContainer restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>} */}
 
       </View>
 
@@ -145,7 +148,10 @@ render(){
 }
 }
 
-
+// Was trying to set up some conditional rendering for the favorites button
+// So that when a user is logged in they will see the star and be able to click and see the fav page
+// If not logged in, no star or home icon
+// If button clicked, display that associative component
 
 
 
