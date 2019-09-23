@@ -108,14 +108,55 @@ class App extends React.Component {
     })
   }
 
+  addHandler=(id)=>{
+    console.log("addhandler user", this.state.user.user_id, "addhandler restaurant", id)
+    fetch("http://localhost:3000/favorites/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            restaurant_id: id,
+            user_id: this.state.user.user_id
+        })
+    })
+    .then(resp=>resp.json())
+    .then(data=>
+        // console.log("post fav fetch data", data.user)
+        // <Favorites user={data.user}/>
+        this.setState({
+          favButtonClicked: true,
+          user: [...this.state.user.favorites, data]
+        })
+        )
+      
+}
+
+
+deleteHandler=(id)=>{
+  let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
+  console.log("deletehandler user", this.state.user.user_id, "deletehandler rest", id, "fav filter", favorite.id)
+
+
+  fetch(`http://localhost:3000/favorites/${favorite.id}`, {
+    method: "DELETE",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
+    // body: JSON.stringify({
+    //   id: favorite.id
+    // })
+  })
+}
+
 
 render(){
-  // let restaurantComponents = this.state.restaurantsArray.map(rest => <Text style={styles.restList} key={rest.restaurant_id}>{rest.name}</Text>)
-  // console.log(this.state.user.restaurants)
 
   let favoriteComponents = this.state.favButtonClicked ? 
-  <Favorites user={this.state.user}/> : 
-  <RestaurantsContainer user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
+  <Favorites deleteHandler={this.deleteHandler} user={this.state.user} /> : 
+  <RestaurantsContainer addHandler={this.addHandler} user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
 
   return (
     <View style={styles.page}>
@@ -125,7 +166,7 @@ render(){
           this.state.user == "" ? null :
           <Icon
           color="#fff"
-          name="exit"
+          name="close"
           onPress={() => this.logoutHandler()}
           />
         }

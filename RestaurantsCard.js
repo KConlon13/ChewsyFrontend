@@ -22,7 +22,7 @@ class RestaurantsCard extends React.Component {
 
                 <View onPress={() => this.restHandler(this.props.obj)}>
 
-                {this.state.cardClicked ? <RestaurantSpecs obj={this.props.obj}/> : 
+                {this.state.cardClicked ? <RestaurantSpecs addHandler={this.props.addHandler} user={this.props.user} obj={this.props.obj}/> : 
                 <Card title={this.props.obj.name} onPress={() => this.restHandler()}>
                     <Text onPress={() => this.restHandler(this.props.obj)}>{this.props.obj.description} </Text>
                     <Text></Text>

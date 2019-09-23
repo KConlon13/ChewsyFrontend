@@ -10,7 +10,7 @@ class Favorites extends React.Component {
      };
     render(){
         let restaurantsComponent = this.props.user.restaurants.map(rest => {
-            return <FavRestaurantsCard key={rest.restaurant_id} obj={rest}/>
+            return <FavRestaurantsCard deleteHandler={this.props.deleteHandler} key={rest.restaurant_id} obj={rest}/>
         })
         
         return (

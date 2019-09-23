@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import RestaurantsCard from "./RestaurantsCard"
+import Favorites from './Favorites';
 
 class RestaurantSpecs extends React.Component {
     state = {
@@ -15,11 +16,32 @@ class RestaurantSpecs extends React.Component {
         })
     }
 
+    // addHandler=(id)=>{
+    //     console.log("addhandler user", this.props.user.user_id, "addhandler restaurant", id)
+    //     fetch("http://localhost:3000/favorites/", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             restaurant_id: id,
+    //             user_id: this.props.user.user_id
+    //         })
+    //     })
+    //     .then(resp=>resp.json())
+    //     .then(data=>
+    //         // console.log("post fav fetch data", data.user)
+    //         <Favorites user={data.user}/>
+    //         )
+
+    // }
+
     render(){
         return (
             <View>
 
-            {this.state.cardClicked ? <RestaurantsCard obj={this.props.obj}/> : 
+            {this.state.cardClicked ? <RestaurantsCard addHandler={this.props.addHandler} obj={this.props.obj}/> : 
                 <Card title={this.props.obj.name} >
 
                     <Text onPress={() => this.restHandler(this.props.obj)}>{this.props.obj.location}</Text>
@@ -34,7 +56,7 @@ class RestaurantSpecs extends React.Component {
                     { this.props.obj.treenut ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Treenut</Text> : null}
                     { this.props.obj.eggs ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Egg</Text> : null}
                     <Text></Text>
-                    <Button title="Add to Favorites" icon={{name: "add", color: "white"}} />
+                    <Button onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "add", color: "white"}} />
                 </Card>
         }
         </View>

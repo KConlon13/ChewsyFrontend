@@ -10,7 +10,7 @@ class RestaurantsContainer extends React.Component {
      };
     render(){
         let restaurantsComponent = this.props.restaurantsArray.map(rest => {
-            return <RestaurantsCard key={rest.restaurant_id} obj={rest}/>
+            return <RestaurantsCard addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/>
         })
         
         return (
