@@ -9,7 +9,7 @@ class Favorites extends React.Component {
         header: null,
      };
     render(){
-        let restaurantsComponent = this.props.user.restaurants.map(rest => {
+        let restaurantsComponent = this.props.favRestaurants.map(rest => {
             return <FavRestaurantsCard deleteHandler={this.props.deleteHandler} key={rest.restaurant_id} obj={rest}/>
         })
         

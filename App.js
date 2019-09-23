@@ -18,7 +18,8 @@ class App extends React.Component {
     memberAlready: false,
     favButtonClicked: false,
     loggedIn: false,
-    user: ""
+    user: "", 
+    favRestaurants: []
   }
 
   static navigationOptions = {
@@ -122,14 +123,14 @@ class App extends React.Component {
         })
     })
     .then(resp=>resp.json())
-    .then(data=>
-        // console.log("post fav fetch data", data.user)
-        // <Favorites user={data.user}/>
+    .then(data=> {
+        console.log("post fav fetch data", data.user)
+        // <Favorites user={data.user}/>,
         this.setState({
           favButtonClicked: true,
-          user: [...this.state.user.favorites, data]
+          favRestaurants: [...this.state.favRestaurants, data.restaurant]
         })
-        )
+        })
       
 }
 
@@ -144,10 +145,7 @@ deleteHandler=(id)=>{
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
-    },
-    // body: JSON.stringify({
-    //   id: favorite.id
-    // })
+    }
   })
 }
 
@@ -155,7 +153,7 @@ deleteHandler=(id)=>{
 render(){
 
   let favoriteComponents = this.state.favButtonClicked ? 
-  <Favorites deleteHandler={this.deleteHandler} user={this.state.user} /> : 
+  <Favorites deleteHandler={this.deleteHandler} user={this.state.user} favRestaurants={this.state.favRestaurants}/> : 
   <RestaurantsContainer addHandler={this.addHandler} user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
 
   return (
