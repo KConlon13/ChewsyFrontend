@@ -71,7 +71,7 @@ class App extends React.Component {
             user: data.user,
             favRestaurants: data.user.restaurants
           })
-          console.log(data.user.restaurants.map(rest=>rest))
+          console.log(data.user.restaurants)
 
           // {<Favorites user={data.user}/>}
         }
@@ -125,39 +125,42 @@ class App extends React.Component {
     })
     .then(resp=>resp.json())
     .then(data=> {
-        console.log("post fav fetch data", data.user)
-        // <Favorites user={data.user}/>,
+        console.log("post fav fetch data", data)
         this.setState({
           favButtonClicked: true,
-          favRestaurants: [...this.state.favRestaurants, data.restaurant]
+          favRestaurants: [...this.state.favRestaurants, data.favorite.restaurant],
+          user: data.user
         })
       })
-      
+      console.log(this.state.user)
 }
 
 
 deleteHandler=(id)=>{
   let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
+  
   console.log("deletehandler user", this.state.user.user_id, "deletehandler rest", id, "fav filter", favorite.id)
 
+  let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
+
+  this.setState({
+    favRestaurants: newFavorites
+  })
+
+  console.log("this is the id from delete", id)
 
   fetch(`http://localhost:3000/favorites/${favorite.id}`, {
     method: "DELETE",
     headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
+      "Content-Type": "application/json",
+      "Accept": "application/json"
     }
-  })
-
-  let newFavorites = this.state.user.restaurants.filter(rest => rest.restaurant_id !== id)
-  this.setState({
-    favRestaurants: newFavorites
   })
 }
 
 
 render(){
-
+  console.log('APP STATE: ', this.state)
   let favoriteComponents = this.state.favButtonClicked ? 
   <Favorites deleteHandler={this.deleteHandler} user={this.state.user} favRestaurants={this.state.favRestaurants}/> : 
   <RestaurantsContainer addHandler={this.addHandler} user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
