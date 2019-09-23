@@ -68,7 +68,8 @@ class App extends React.Component {
             }
           };
           this.setState({
-            user: data.user
+            user: data.user,
+            favRestaurants: data.user.restaurants
           })
           console.log(data.user.restaurants.map(rest=>rest))
 
@@ -130,7 +131,7 @@ class App extends React.Component {
           favButtonClicked: true,
           favRestaurants: [...this.state.favRestaurants, data.restaurant]
         })
-        })
+      })
       
 }
 
@@ -146,6 +147,11 @@ deleteHandler=(id)=>{
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
+  })
+
+  let newFavorites = this.state.user.restaurants.filter(rest => rest.restaurant_id !== id)
+  this.setState({
+    favRestaurants: newFavorites
   })
 }
 
