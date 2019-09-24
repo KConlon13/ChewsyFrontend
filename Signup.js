@@ -5,26 +5,47 @@ import Favorites from "./Favorites"
 class Signup extends Component {
     state={
         username: "",
-        password: ""
+        password: "",
+        password2: ""
     }
 
 
 
-    // signup handler prob not working rn
     signupHandler=(state)=>{
-        fetch("http://localhost:3000/users", {
-            headers: {
-                'content-type': 'application/json',
-                'accept': 'application/json'
-              },
-          method: 'POST',
-          body: JSON.stringify({
-            username: state.username,
-            password: state.password
-          }),
-        })
-          .then(response => response.json())
-          .then(data => console.log(data))
+        if (!state.username || !state.password || !state.password2) {
+            alert("Please enter valid username/password")
+        } else{
+            if (state.password === state.password2) {
+                fetch("http://localhost:3000/users", {
+                    headers: {
+                        'content-type': 'application/json',
+                        'accept': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        user: {
+                            username: state.username,
+                            password: state.password
+                        }
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.errors) {
+                        alert(data.errors)
+                    } else {
+                        this.props.clickHandler(this.state)
+                    }
+                })
+            } else {
+                alert("Passwords must match")
+                this.setState({
+                    password: "",
+                    password2: ""
+                })
+            }
+        }
+        
     }
 
 
@@ -33,9 +54,9 @@ class Signup extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text style={styles.centerTitle}>JOIN US JOIN US JOIN US</Text>
+                <Text style={styles.centerTitle}>Join Us</Text>
                 <TextInput style={styles.inputBox}
-                onChangeText={(email) => this.setState({email})}
+                onChangeText={(username) => this.setState({username})}
                 placeholder="Username"
                 placeholderTextColor = "#002f6c"
                 selectionColor="#fff"/>
@@ -43,6 +64,14 @@ class Signup extends Component {
                 <TextInput style={styles.inputBox}
                 onChangeText={(password) => this.setState({password})} 
                 placeholder="Password"
+                secureTextEntry={true}
+                type="password"
+                placeholderTextColor = "#002f6c"
+                />
+
+                <TextInput style={styles.inputBox}
+                onChangeText={(password2) => this.setState({password2})} 
+                placeholder="Re-enter Password"
                 secureTextEntry={true}
                 type="password"
                 placeholderTextColor = "#002f6c"

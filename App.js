@@ -21,22 +21,60 @@ class App extends React.Component {
     user: "", 
     favRestaurants: []
   }
-
+  
   static navigationOptions = {
     header: null,
- };
-
-
+  };
+  
+  // autologin
+  // componentWillMount(){
+  //   autoLogin()
+  // }
+  
+  // autoLogin = () => {
+  //   _retrieveData = async () => {
+  //  try {
+  //    const value = await AsyncStorage.getItem('token');
+  //    if (value !== null) {
+  //      fetch(`http://localhost:3000/autologin`, {
+  //        headers: {
+  //          'accept': 'application/json', 
+  //          Authorization: value
+  //         }
+  //       })
+  //       .then(resp=>resp.json())
+  //       .then(data => {
+  //         if (data.error){
+  //           alert(date.error)
+  //         }else {
+  //           // AsyncStorage.setItem('user', data.user_name)
+  //           this.setState({
+  //               user: data
+  //             })
+  //             console.log("autologin data", data)
+  //           }
+  //         }
+  //         )
+  //       }
+  //     } catch (error) {
+  //       alert("user not found")
+  //     }
+  //   };
+  //   _retrieveData()
+  // }
+  // end of autologin
+  
+  
   componentDidMount(){
     fetch("http://localhost:3000/restaurants")
     .then(response=>response.json())
     .then(data => this.setState({restaurantsArray: data})) 
   }
-
-
+  
+  
   clickHandler=(state)=>{
-      console.log(state.Object)
-      let username = state.username
+    console.log("LOGIN STATE: ", state)
+    let username = state.username
       let password = state.password
       fetch("http://localhost:3000/login", {
         method: "POST",
@@ -51,6 +89,7 @@ class App extends React.Component {
       })
       .then(response=>response.json())
       .then(data=>{
+        console.log("DATA AFTER FETCH", data)
         if (data.token === undefined){
           alert("Invalid Username/Password")
         } else {
@@ -64,9 +103,9 @@ class App extends React.Component {
               await AsyncStorage.setItem('token', data.token);
             } catch (error) {
               alert("storing error")
-              _storeData();
             }
           };
+          _storeData();
           this.setState({
             user: data.user,
             favRestaurants: data.user.restaurants
@@ -95,11 +134,24 @@ class App extends React.Component {
 
 
   logoutHandler=()=>{
-    alert("You have successfully logged out")
     this.setState({
       loggedIn: false,
       user: ""
     })
+    _removeData = async () => {
+      alert("You have successfully logged out?")
+      try {
+        alert("removing")
+        await AsyncStorage.removeItem('token', (err) => {
+          console.log('Local storage user info removed!');
+      });
+      } catch (error) {
+        alert("removing error")
+        return false
+      }
+    };
+    _removeData();
+
     {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
   }
 
@@ -111,7 +163,7 @@ class App extends React.Component {
   }
 
   addHandler=(id)=>{
-    console.log("addhandler user", this.state.user.user_id, "addhandler restaurant", id)
+    console.log("addhandler user", this.state.user.id, "addhandler restaurant", id)
     fetch("http://localhost:3000/favorites/", {
         method: "POST",
         headers: {
@@ -120,7 +172,7 @@ class App extends React.Component {
         },
         body: JSON.stringify({
             restaurant_id: id,
-            user_id: this.state.user.user_id
+            user_id: this.state.user.id
         })
     })
     .then(resp=>resp.json())
@@ -139,7 +191,7 @@ class App extends React.Component {
 deleteHandler=(id)=>{
   let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
   
-  console.log("deletehandler user", this.state.user.user_id, "deletehandler rest", id, "fav filter", favorite.id)
+  console.log("deletehandler user", this.state.user.id, "deletehandler rest", id, "fav filter", favorite.id)
 
   let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
 
@@ -163,7 +215,7 @@ render(){
   console.log('APP STATE: ', this.state)
   let favoriteComponents = this.state.favButtonClicked ? 
   <Favorites deleteHandler={this.deleteHandler} user={this.state.user} favRestaurants={this.state.favRestaurants}/> : 
-  <RestaurantsContainer addHandler={this.addHandler} user={this.state.user} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
+  <RestaurantsContainer addHandler={this.addHandler} user={this.state.user} favRestaurants={this.state.favRestaurants} restaurantsArray={this.state.restaurantsArray} style={styles.restaurants}/>
 
   return (
     <View style={styles.page}>

@@ -10,8 +10,18 @@ class RestaurantsContainer extends React.Component {
      };
     render(){
         let restaurantsComponent = this.props.restaurantsArray.map(rest => {
-            return <RestaurantsCard addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/>
+            return <RestaurantsCard favRestaurants={this.props.favRestaurants} addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/>
         })
+
+        // let restaurantsComponent = this.props.restaurantsArray.map(rest => {
+        //     console.log("iterated rests from restaurants array:", rest, "rests from favs", this.props.favRestaurants, "the entire restaurantsArray: ", this.props.restaurantsArray)
+        //     this.props.favRestaurants.filter(rest => ) ? 
+        //     null
+        //     : <RestaurantsCard addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/> 
+        // })
+
+        // if a rest is found inside the favRestaurants array, remove it
+        // OR return an array to iterate through that doesnt have that element
         
         return (
             <View style={styles.page}>
