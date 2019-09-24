@@ -99,7 +99,7 @@ class App extends React.Component {
           console.log(data.user.restaurants, this.state.loggedIn, data.token)
           _storeData = async () => {
             try {
-              alert("storing")
+              // alert("storing")
               await AsyncStorage.setItem('token', data.token);
             } catch (error) {
               alert("storing error")
@@ -139,9 +139,9 @@ class App extends React.Component {
       user: ""
     })
     _removeData = async () => {
-      alert("You have successfully logged out?")
+      // alert("You have successfully logged out?")
       try {
-        alert("removing")
+        // alert("removing")
         await AsyncStorage.removeItem('token', (err) => {
           console.log('Local storage user info removed!');
       });
@@ -190,14 +190,14 @@ class App extends React.Component {
 
 deleteHandler=(id)=>{
   let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
-  
   console.log("deletehandler user", this.state.user.id, "deletehandler rest", id, "fav filter", favorite.id)
-
+  
   let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
+  // debuggerx
 
   this.setState({
     favRestaurants: newFavorites
-  })
+  }, ()=> console.log("HEY", this.state.favRestaurants))
 
   console.log("this is the id from delete", id)
 
@@ -256,12 +256,6 @@ render(){
   );
 }
 }
-
-// Was trying to set up some conditional rendering for the favorites button
-// So that when a user is logged in they will see the star and be able to click and see the fav page
-// If not logged in, no star or home icon
-// If button clicked, display that associative component
-
 
 
 const AppNavigator = createStackNavigator({

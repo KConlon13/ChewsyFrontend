@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView } from 'react-native';
 import { ThemeProvider, Text, Header } from 'react-native-elements';
-import RestaurantsCard from './RestaurantsCard'
+import RestaurantsCardToggle from './RestaurantsCardToggle'
 
 
 class RestaurantsContainer extends React.Component {
@@ -10,7 +10,7 @@ class RestaurantsContainer extends React.Component {
      };
     render(){
         let restaurantsComponent = this.props.restaurantsArray.map(rest => {
-            return <RestaurantsCard favRestaurants={this.props.favRestaurants} addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/>
+            return <RestaurantsCardToggle favRestaurants={this.props.favRestaurants} addHandler={this.props.addHandler} user={this.props.user} key={rest.restaurant_id} obj={rest}/>
         })
 
         // let restaurantsComponent = this.props.restaurantsArray.map(rest => {
