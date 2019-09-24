@@ -35,7 +35,7 @@ class RestaurantSpecs extends React.Component {
                     <Text></Text>
 
                     {this.props.favRestaurants.map(rest => rest.restaurant_id).includes(this.props.obj.restaurant_id) ? 
-                    <Text>Already Favorited!</Text> : 
+                    <Button title="Already Favorited!"/> : 
                     <Button onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "add", color: "white"}} />
                     }
 
