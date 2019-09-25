@@ -1,21 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
-import RestaurantsCard from "./RestaurantsCard"
-import Favorites from './Favorites';
 
 class RestaurantSpecs extends React.Component {
-
-    
-    // inside the return, a conditional render is needed for the button based on whether or not this specific object is found inside of the favRestaurants array that is in its passed down props
-    
-    
     
     render(){
         console.log("This is favorited restaurants of that user from props: ", this.props.user.restaurants, 
         "And this is the props obj i want to compare: ", this.props.obj)
         
-        // debugger
         return (
             <View>
                 <Card title={this.props.obj.name} >
@@ -36,7 +28,7 @@ class RestaurantSpecs extends React.Component {
 
                     {this.props.favRestaurants.map(rest => rest.restaurant_id).includes(this.props.obj.restaurant_id) ? 
                     <Button title="Already Favorited!"/> : 
-                    <Button onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "add", color: "white"}} />
+                    <Button onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "star", color: "white"}} />
                     }
 
                  </Card>
@@ -45,7 +37,6 @@ class RestaurantSpecs extends React.Component {
         )
     }
 }
-// could also do the logic on line 47 using state inside render above
 
 
 const styles = StyleSheet.create({

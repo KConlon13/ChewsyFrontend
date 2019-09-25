@@ -35,11 +35,13 @@ class RestaurantsCard extends React.Component {
                     { this.props.obj.treenut ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Treenut</Text> : null}
                     { this.props.obj.eggs ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Egg</Text> : null}
                     <Text></Text>
-                    <Button onPress={() => this.props.deleteHandler(this.props.obj.restaurant_id)} title="Remove From Favorites" icon={{color: "white"}} />
+                    <Button onPress={() => this.props.deleteHandler(this.props.obj.restaurant_id)} title="  Remove From Favorites" icon={<Icon color= "white" name= "x" type="octicon" />}   
+                    />
+
                 </Card>
                 
                 </View>
-                </View>
+            </View>
         )
     }
 }

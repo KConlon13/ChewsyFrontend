@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
-import { SearchBar, Header, Icon } from 'react-native-elements'
+import { SearchBar, Header, Button, Icon } from 'react-native-elements'
 // import Map from "./Map"
 import chewsyLogo from "./assets/chewsyLogo.png"
 import Login from "./Login"
@@ -9,7 +9,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Favorites from "./Favorites"
 import RestaurantsContainer from './RestaurantsContainer';
-// import { Icon } from 'react-native-material-ui'
+// import { Icon, Button } from 'react-native-material-ui'
 
 
 class App extends React.Component {
@@ -117,14 +117,6 @@ class App extends React.Component {
       })
   }
 
-
-// Could pass data.user down as state and if its true then render each component as necessary
-// Maybe as a log out you would set up a clickhandler to go up to App and clear that state so that 
-// it would take you back to the log in page?
-// not sure if we should be using token 
-
-
-
   loginHandler=(state)=>{
     this.setState({
       memberAlready: !this.state.memberAlready
@@ -156,7 +148,6 @@ class App extends React.Component {
   }
 
   favButtonHandler=(e)=>{
-    // {name} = e.target
     this.setState({
       favButtonClicked: !this.state.favButtonClicked
     })
@@ -193,7 +184,6 @@ deleteHandler=(id)=>{
   console.log("deletehandler user", this.state.user.id, "deletehandler rest", id, "fav filter", favorite.id)
   
   let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
-  // debuggerx
 
   this.setState({
     favRestaurants: newFavorites
@@ -223,9 +213,15 @@ render(){
       <Header style={styles.header}>
       {
           this.state.user == "" ? null :
-          <Icon
-          color="#fff"
-          name="close"
+          <Button
+          icon={
+            <Icon
+            name='sign-out'
+            type='octicon'
+            color="white"
+            size={22}
+            />
+          }
           onPress={() => this.logoutHandler()}
           />
         }
@@ -235,7 +231,7 @@ render(){
           null :
           this.state.favButtonClicked ? 
           <Icon style={styles.icon} color="#fff" name="home" onPress={this.favButtonHandler} /> :
-          <Icon style={styles.icon} color="#fff" name="star" onPress={() => this.favButtonHandler()} /> 
+          <Icon style={styles.icon} color="#fff" name="star" onPress={() => this.favButtonHandler()} />
         }
 
       

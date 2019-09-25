@@ -15,7 +15,6 @@ class RestaurantsCardToggle extends React.Component {
         })
     }
 
-
     render(){
         return (
 
@@ -28,7 +27,6 @@ class RestaurantsCardToggle extends React.Component {
         </View>
 
         )
-
     }
 }
 
