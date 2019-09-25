@@ -15,11 +15,11 @@ class Favorites extends React.Component {
         
         return (
             <View style={styles.page}>
-                <Text style={styles.title} h5>Favorite Restaurants</Text>
             <ScrollView contentContainerstyle={styles.contentContainer } ref={ref => this.scrollView = ref}
             onContentSizeChange={(contentWidth, contentHeight)=>{        
-                this.scrollView.scrollToEnd({animated: true});
+                // this.scrollView.scrollToEnd({animated: true});
             }}>
+            <Text style={styles.title} h5>Favorite Restaurants</Text>
                 {restaurantsComponent}
             </ScrollView>
             </View>

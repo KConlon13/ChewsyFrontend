@@ -36,7 +36,6 @@ class RestaurantsContainer extends React.Component {
 
         return (
             <View style={styles.page}>
-                <Text style={styles.title} h5>All Restaurants</Text>
 
                 {/* <Search style={styles.search} changeHandler={this.changeHandler}/> */}
             <ScrollView contentContainerstyle={styles.contentContainer } ref={ref => this.scrollView = ref}
@@ -45,6 +44,7 @@ class RestaurantsContainer extends React.Component {
                 // this.scrollView.scrollTo({x: 0, y: 0, animated: true})
                 // this.scrollView.scrollToEnd({animated: true});
             }}>
+            <Text style={styles.title} h5>All Restaurants</Text>
                 {restaurantsComponent}
             </ScrollView>
             </View>
