@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Image, AsyncStorage, ActionSheetIOS } from 'react-native';
 import { SearchBar, Header, Button, Icon } from 'react-native-elements'
 // import Map from "./Map"
 import chewsyLogo from "./assets/chewsyLogo.png"
@@ -180,24 +180,37 @@ class App extends React.Component {
 
 
 deleteHandler=(id)=>{
-  let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
-  console.log("deletehandler user", this.state.user.id, "deletehandler rest", id, "fav filter", favorite.id)
-  
-  let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
 
-  this.setState({
-    favRestaurants: newFavorites
-  }, ()=> console.log("HEY", this.state.favRestaurants))
-
-  console.log("this is the id from delete", id)
-
-  fetch(`http://localhost:3000/favorites/${favorite.id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }
-  })
+  ActionSheetIOS.showActionSheetWithOptions(
+    {
+      options: ['Cancel', 'Remove'],
+      destructiveButtonIndex: 1,
+      cancelButtonIndex: 0,
+    },
+    (buttonIndex) => {
+      if (buttonIndex === 1) {
+        /* destructive action */
+        let favorite = this.state.user.favorites.find(favId => favId.restaurant_id === id)
+        console.log("deletehandler user", this.state.user.id, "deletehandler rest", id, "fav filter", favorite.id)
+        
+        let newFavorites = this.state.favRestaurants.filter(rest => rest.restaurant_id !== id)
+        
+        this.setState({
+          favRestaurants: newFavorites
+        }, ()=> console.log("HEY", this.state.favRestaurants))
+        
+        console.log("this is the id from delete", id)
+        
+        fetch(`http://localhost:3000/favorites/${favorite.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        })
+      }
+    },
+  );
 }
 
 
