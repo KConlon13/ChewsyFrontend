@@ -14,11 +14,25 @@ class RestaurantsContainer extends React.Component {
 
     changeHandler = (searchterm) => {
         this.setState({searchTerm: searchterm})
-        console.log(searchterm)
+        console.log("SEARCH TERM :", searchterm)
     } 
 
-    // filterArtists = (prop) =>{
-    //     return this.props.restaurantsArray.filter(rest => rest.prop === true)
+    // filterRestaurants = () =>{
+    //     if (this.state.searchTerm === "peanut") {
+    //         return this.props.restaurantsArray.filter(rest => rest.peanut === true)
+    //     } else if (this.state.searchTerm === "gluten") {
+    //         return this.props.restaurantsArray.filter(rest => rest.gluten === true)
+    //     } else if (this.state.searchTerm === "wheat") {
+    //         return this.props.restaurantsArray.filter(rest => rest.wheat === true)            
+    //     } else if (this.state.searchTerm === "dairy") {
+    //         return this.props.restaurantsArray.filter(rest => rest.dairy === true)
+    //     } else if (this.state.searchTerm === "treenut") {
+    //         return this.props.restaurantsArray.filter(rest => rest.treenut === true)
+    //     } else if (this.state.searchTerm === "eggs") {
+    //         return this.props.restaurantsArray.filter(rest => rest.eggs === true)
+    //     } else if (this.state.searchTerm === ""){
+    //         return this.props.restaurantsArray
+    //     }
     // }
 
 
@@ -37,14 +51,14 @@ class RestaurantsContainer extends React.Component {
         return (
             <View style={styles.page}>
 
-                {/* <Search style={styles.search} changeHandler={this.changeHandler}/> */}
+                <Search style={styles.search} changeHandler={this.changeHandler}/>
             <ScrollView contentContainerstyle={styles.contentContainer } ref={ref => this.scrollView = ref}
             onContentSizeChange={(contentWidth, contentHeight)=>{  
                 
                 // this.scrollView.scrollTo({x: 0, y: 0, animated: true})
                 // this.scrollView.scrollToEnd({animated: true});
             }}>
-            <Text style={styles.title} h5>All Restaurants</Text>
+            {/* <Text style={styles.title} h5>All Restaurants</Text> */}
                 {restaurantsComponent}
             </ScrollView>
             </View>
