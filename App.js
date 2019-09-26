@@ -27,41 +27,43 @@ class App extends React.Component {
   };
   
   // autologin
-  // componentWillMount(){
-  //   autoLogin()
-  // }
+  componentWillMount(){
+    this.autoLogin()
+    console.log(this.state)
+  }
   
-  // autoLogin = () => {
-  //   _retrieveData = async () => {
-  //  try {
-  //    const value = await AsyncStorage.getItem('token');
-  //    if (value !== null) {
-  //      fetch(`http://localhost:3000/autologin`, {
-  //        headers: {
-  //          'accept': 'application/json', 
-  //          Authorization: value
-  //         }
-  //       })
-  //       .then(resp=>resp.json())
-  //       .then(data => {
-  //         if (data.error){
-  //           alert(date.error)
-  //         }else {
-  //           // AsyncStorage.setItem('user', data.user_name)
-  //           this.setState({
-  //               user: data
-  //             })
-  //             console.log("autologin data", data)
-  //           }
-  //         }
-  //         )
-  //       }
-  //     } catch (error) {
-  //       alert("user not found")
-  //     }
-  //   };
-  //   _retrieveData()
-  // }
+  autoLogin = () => {
+    _retrieveData = async () => {
+   try {
+     const value = await AsyncStorage.getItem('token');
+     if (value !== null) {
+       fetch(`http://localhost:3000/autologin`, {
+         headers: {
+           'accept': 'application/json', 
+           Authorization: value
+          }
+        })
+        .then(resp=>resp.json())
+        .then(data => {
+          if (data.error){
+            alert(data.error)
+          }else {
+            AsyncStorage.setItem('user', data.user.id).then(()=> this.setState({
+              user: data.user,
+              favRestaurants: data.user.restaurants
+            })
+            )
+              console.log("autologin data", data)
+            }
+          }
+          )
+        }
+      } catch (error) {
+        alert("user not found")
+      }
+    };
+    _retrieveData()
+  }
   // end of autologin
   
   
