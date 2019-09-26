@@ -225,16 +225,18 @@ render(){
   return (
     <View style={styles.page}>
 
-      <Header style={styles.header}>
+      <Header containerStyle={{backgroundColor: "#05A8AA"}}>
       {
-          this.state.user == "" ? null :
-          <Button
-          icon={
-            <Icon
-            name='sign-out'
-            type='octicon'
-            color="white"
-            size={22}
+        this.state.user == "" ? null :
+        <Button
+        buttonStyle={{backgroundColor: "#05A8AA"}}
+        icon={
+          <Icon
+          name='sign-out'
+          type='octicon'
+          color="white"
+          reverseColor= "#05A8AA"
+          size={22}
             />
           }
           onPress={() => this.logoutHandler()}
@@ -242,15 +244,16 @@ render(){
         }
       <Image style={styles.logo} source={chewsyLogo}/>
       {
-          this.state.user == "" ? 
-          null :
-          this.state.favButtonClicked ? 
-          <Icon style={styles.icon} color="#fff" name="home" onPress={this.favButtonHandler} /> :
-          <Icon style={styles.icon} color="#fff" name="star" onPress={() => this.favButtonHandler()} />
-        }
+        this.state.user == "" ? 
+        null :
+        this.state.favButtonClicked ? 
+        <Icon style={styles.icon} color="#fff" name="home" underlayColor="#05A8AA" onPress={this.favButtonHandler} /> :
+        <Icon style={styles.icon} color="#fff" name="star" underlayColor="#05A8AA" onPress={() => this.favButtonHandler()} />
+      }
 
       
       </Header>
+
         
         <View style={styles.centerForm}>
         <Text></Text>
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
   // },
   page: {
     flex: 1,
-    backgroundColor: "powderblue"
+    backgroundColor: "#C0C7D2"
   },
   restList: {
     textAlign: "center"
