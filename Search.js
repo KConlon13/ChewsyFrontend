@@ -14,7 +14,7 @@ class Search extends React.Component {
                 selectedValue={this.state.selectedAllergy}
                 onValueChange={(itemValue, itemIndex)=> 
                     this.setState({selectedAllergy: itemValue})}
-                    itemStyle={{height:80}}
+                    itemStyle={{height:80, backgroundColor: "white"}}
                 onChange={()=>this.props.changeHandler(this.state.selectedAllergy)}
                 >
                 <Picker.Item label="Sort Restaurants by Allergy" value="" />
@@ -30,7 +30,6 @@ class Search extends React.Component {
 }
 
 // there is a delay in what is being console logged after the onChange occurs and state changes
-// need to figure this out
 
 // need to get this wired up and running, right now it just displays how i want it to
 

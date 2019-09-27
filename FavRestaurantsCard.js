@@ -21,7 +21,7 @@ class RestaurantsCard extends React.Component {
 
                 <View onPress={() => this.restHandler(this.props.obj)}>
 
-                <Card title={this.props.obj.name} >
+                <Card title={this.props.obj.name} containerStyle={{borderColor: "orange", shadowRadius: 5}}>
 
                     <Text onPress={() => this.restHandler(this.props.obj)}>{this.props.obj.location}</Text>
                     <Text onPress={() => this.restHandler(this.props.obj)}></Text>
@@ -35,7 +35,9 @@ class RestaurantsCard extends React.Component {
                     { this.props.obj.treenut ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Treenut</Text> : null}
                     { this.props.obj.eggs ? <Text onPress={() => this.restHandler(this.props.obj)}>   • Egg</Text> : null}
                     <Text></Text>
-                    <Button onPress={() => this.props.deleteHandler(this.props.obj.restaurant_id)} title="  Remove From Favorites" icon={<Icon color= "white" name= "x" type="octicon" />}   
+                    <Button onPress={() => this.props.deleteHandler(this.props.obj.restaurant_id)} 
+                    title="  Remove From Favorites" icon={<Icon color= "white" name= "x" type="octicon" /> }
+                    buttonStyle={{backgroundColor: "#FF6700"}}  
                     />
 
                 </Card>

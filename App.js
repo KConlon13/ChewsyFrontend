@@ -128,25 +128,35 @@ class App extends React.Component {
 
 
   logoutHandler=()=>{
-    this.setState({
-      loggedIn: false,
-      user: ""
-    })
-    _removeData = async () => {
-      // alert("You have successfully logged out?")
-      try {
-        // alert("removing")
-        await AsyncStorage.removeItem('token', (err) => {
-          console.log('Local storage user info removed!');
-      });
-      } catch (error) {
-        alert("removing error")
-        return false
-      }
-    };
-    _removeData();
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Logout'],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) {
+          this.setState({
+            loggedIn: false,
+            user: ""
+          })
+          _removeData = async () => {
+            // alert("You have successfully logged out?")
+            try {
+              // alert("removing")
+              await AsyncStorage.removeItem('token', (err) => {
+                console.log('Local storage user info removed!');
+            });
+            } catch (error) {
+              alert("removing error")
+              return false
+            }
+          };
+          _removeData()
 
-    {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+          {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+        }
+      })
   }
 
   favButtonHandler=(e)=>{
@@ -225,17 +235,17 @@ render(){
   return (
     <View style={styles.page}>
 
-      <Header containerStyle={{backgroundColor: "#05A8AA"}}>
+      <Header containerStyle={{backgroundColor: "#FF6700" }}>
       {
         this.state.user == "" ? null :
         <Button
-        buttonStyle={{backgroundColor: "#05A8AA"}}
+        buttonStyle={{backgroundColor: "#FF6700"}}
         icon={
           <Icon
           name='sign-out'
           type='octicon'
           color="white"
-          reverseColor= "#05A8AA"
+          reverseColor= "#FF6700"
           size={22}
             />
           }
@@ -247,8 +257,8 @@ render(){
         this.state.user == "" ? 
         null :
         this.state.favButtonClicked ? 
-        <Icon style={styles.icon} color="#fff" name="home" underlayColor="#05A8AA" onPress={this.favButtonHandler} /> :
-        <Icon style={styles.icon} color="#fff" name="star" underlayColor="#05A8AA" onPress={() => this.favButtonHandler()} />
+        <Icon style={styles.icon} color="#fff" name="home" underlayColor="#FF6700" onPress={this.favButtonHandler} /> :
+        <Icon style={styles.icon} color="#fff" name="star" underlayColor="#FF6700" onPress={() => this.favButtonHandler()} />
       }
 
       
@@ -306,7 +316,7 @@ const styles = StyleSheet.create({
   // },
   page: {
     flex: 1,
-    backgroundColor: "#C0C7D2"
+    backgroundColor: "white"
   },
   restList: {
     textAlign: "center"
