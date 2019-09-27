@@ -70,7 +70,7 @@ class RestaurantsContainer extends React.Component {
 
 const styles = StyleSheet.create({
     page: {
-        height: 700
+        height: 690
     },
     title: {
         fontSize: 20,
