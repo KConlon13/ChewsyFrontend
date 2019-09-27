@@ -14,7 +14,7 @@ class Search extends React.Component {
                 selectedValue={this.state.selectedAllergy}
                 onValueChange={(itemValue, itemIndex)=> 
                     this.setState({selectedAllergy: itemValue})}
-                    itemStyle={{height:80, backgroundColor: "white"}}
+                    itemStyle={{height:80, backgroundColor: "white", color: "#FF6700"}}
                 onChange={()=>this.props.changeHandler(this.state.selectedAllergy)}
                 >
                 <Picker.Item label="Sort Restaurants by Allergy" value="" />

@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         textAlign: "center",
-        textDecorationLine: "underline",
-        paddingBottom: 15
+        // textDecorationLine: "underline",
+        paddingBottom: 15,
+        color: "#FF6700"
     }
 })
 
