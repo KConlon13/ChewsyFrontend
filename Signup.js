@@ -57,13 +57,13 @@ class Signup extends Component {
                 <Text style={styles.centerTitle}>Join Us</Text>
                 <TextInput style={styles.inputBox}
                 onChangeText={(username) => this.setState({username})}
-                placeholder="Username"
+                placeholder="Create Username"
                 placeholderTextColor = "#002f6c"
                 selectionColor="#fff"/>
                 
                 <TextInput style={styles.inputBox}
                 onChangeText={(password) => this.setState({password})} 
-                placeholder="Password"
+                placeholder="Create Password"
                 secureTextEntry={true}
                 type="password"
                 placeholderTextColor = "#002f6c"
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 300,
-        backgroundColor: '#4f83cc',
+        backgroundColor: '#FF6700',
         borderRadius: 25,
         marginVertical: 10,
         paddingVertical: 12
