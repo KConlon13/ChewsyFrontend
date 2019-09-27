@@ -19,7 +19,7 @@ class Search extends React.Component {
                     this.props.changeHandler(this.state.selectedAllergy))
             }}
             itemStyle={{height:80, backgroundColor: "white", color: "#FF6700"}} >
-                <Picker.Item label="Sort Restaurants by Allergy" value="" />
+                <Picker.Item label="Sort Restaurants by Allergy:" value="" />
                 <Picker.Item label="Peanut-Friendly" value="peanut" />
                 <Picker.Item label="Gluten-Friendly" value="gluten"  />
                 <Picker.Item label="Wheat-Friendly" value="wheat"  />

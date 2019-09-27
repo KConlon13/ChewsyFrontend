@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inputBox: {
-        width: 300,
+        width: 290,
         backgroundColor: '#eeeeee', 
         borderRadius: 25,
         paddingHorizontal: 16,
@@ -68,8 +68,10 @@ const styles = StyleSheet.create({
     centerTitle: {
         color: "black",
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 25,
         textAlign: "center",
+        marginTop: 20,
+        marginBottom: 10
         // fontFamily: "Pacifico-Regular"
       },
 });
