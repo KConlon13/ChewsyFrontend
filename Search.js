@@ -3,20 +3,22 @@ import { Picker, StyleSheet, View } from 'react-native'
 
 class Search extends React.Component {
     state={
-        selectedAllergy: ""
+        selectedAllergy: ''
+    }
+
+    async allergyChanger(itemValue) {
+       await this.setState({selectedAllergy: itemValue})
     }
 
     render(){
-        
-        // console.log(this.state.selectedAllergy)
         return (
-                <Picker 
-                selectedValue={this.state.selectedAllergy}
-                onValueChange={(itemValue, itemIndex)=> 
-                    this.setState({selectedAllergy: itemValue})}
-                    itemStyle={{height:80, backgroundColor: "white", color: "#FF6700"}}
-                onChange={()=>this.props.changeHandler(this.state.selectedAllergy)}
-                >
+            <Picker 
+            selectedValue={this.state.selectedAllergy}
+            onValueChange={(itemValue, itemIndex)=> {
+                this.allergyChanger(itemValue).then(() => 
+                    this.props.changeHandler(this.state.selectedAllergy))
+            }}
+            itemStyle={{height:80, backgroundColor: "white", color: "#FF6700"}} >
                 <Picker.Item label="Sort Restaurants by Allergy" value="" />
                 <Picker.Item label="Peanut-Friendly" value="peanut" />
                 <Picker.Item label="Gluten-Friendly" value="gluten"  />
@@ -24,18 +26,9 @@ class Search extends React.Component {
                 <Picker.Item label="Dairy-Friendly" value="dairy"  />
                 <Picker.Item label="Treenut-Friendly" value="treenut"  />
                 <Picker.Item label="Egg-Friendly" value="eggs"  />
-                </Picker>
+            </Picker>
         )
     }
 }
-
-// there is a delay in what is being console logged after the onChange occurs and state changes
-
-// need to get this wired up and running, right now it just displays how i want it to
-
-const styles = StyleSheet.create({
-
-})
-
 
 export default Search;

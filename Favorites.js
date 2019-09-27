@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         color: "#FF6700",
         fontSize: 22,
         paddingTop: 23,
-        paddingBottom: 32
+        paddingBottom: 32,
+        backgroundColor: "white"
     }
 })
 
