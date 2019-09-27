@@ -19,7 +19,7 @@ class Favorites extends React.Component {
             onContentSizeChange={(contentWidth, contentHeight)=>{        
                 // this.scrollView.scrollToEnd({animated: true});
             }}>
-            <Text style={styles.title} h5>Favorite Restaurants</Text>
+            <Text style={styles.title} h5>Your Favorite Restaurants</Text>
                 {restaurantsComponent}
             </ScrollView>
             </View>
@@ -34,8 +34,18 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         textAlign: "center",
-        textDecorationLine: "underline",
-        paddingBottom: 15
+
+        paddingBottom: 8,
+        paddingTop: 7,
+        color: "#EF9047",
+        fontSize: 22,
+        justifyContent: "center",
+        marginTop: 18,
+        marginBottom: 20,
+        backgroundColor: "white",
+        borderBottomColor: "#DEDEDE",
+        borderWidth: 0.18,
+        borderStyle: "solid",
     }
 })
 

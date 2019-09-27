@@ -128,25 +128,35 @@ class App extends React.Component {
 
 
   logoutHandler=()=>{
-    this.setState({
-      loggedIn: false,
-      user: ""
-    })
-    _removeData = async () => {
-      // alert("You have successfully logged out?")
-      try {
-        // alert("removing")
-        await AsyncStorage.removeItem('token', (err) => {
-          console.log('Local storage user info removed!');
-      });
-      } catch (error) {
-        alert("removing error")
-        return false
-      }
-    };
-    _removeData();
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Cancel', 'Logout'],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) {
+          this.setState({
+            loggedIn: false,
+            user: ""
+          })
+          _removeData = async () => {
+            // alert("You have successfully logged out?")
+            try {
+              // alert("removing")
+              await AsyncStorage.removeItem('token', (err) => {
+                console.log('Local storage user info removed!');
+            });
+            } catch (error) {
+              alert("removing error")
+              return false
+            }
+          };
+          _removeData()
 
-    {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+          {< Login clickHandler={this.clickHandler} loginHandler={this.loginHandler}/>}
+        }
+      })
   }
 
   favButtonHandler=(e)=>{
@@ -225,16 +235,18 @@ render(){
   return (
     <View style={styles.page}>
 
-      <Header style={styles.header}>
+      <Header containerStyle={{backgroundColor: "#FF6700" }}>
       {
-          this.state.user == "" ? null :
-          <Button
-          icon={
-            <Icon
-            name='sign-out'
-            type='octicon'
-            color="white"
-            size={22}
+        this.state.user == "" ? null :
+        <Button
+        buttonStyle={{backgroundColor: "#FF6700"}}
+        icon={
+          <Icon
+          name='sign-out'
+          type='octicon'
+          color="white"
+          reverseColor= "#FF6700"
+          size={22}
             />
           }
           onPress={() => this.logoutHandler()}
@@ -242,15 +254,16 @@ render(){
         }
       <Image style={styles.logo} source={chewsyLogo}/>
       {
-          this.state.user == "" ? 
-          null :
-          this.state.favButtonClicked ? 
-          <Icon style={styles.icon} color="#fff" name="home" onPress={this.favButtonHandler} /> :
-          <Icon style={styles.icon} color="#fff" name="star" onPress={() => this.favButtonHandler()} />
-        }
+        this.state.user == "" ? 
+        null :
+        this.state.favButtonClicked ? 
+        <Icon style={styles.icon} color="#fff" name="home" underlayColor="#FF6700" onPress={this.favButtonHandler} /> :
+        <Icon style={styles.icon} color="#fff" name="star" underlayColor="#FF6700" onPress={() => this.favButtonHandler()} />
+      }
 
       
       </Header>
+
         
         <View style={styles.centerForm}>
         <Text></Text>
@@ -303,7 +316,7 @@ const styles = StyleSheet.create({
   // },
   page: {
     flex: 1,
-    backgroundColor: "powderblue"
+    backgroundColor: "white"
   },
   restList: {
     textAlign: "center"

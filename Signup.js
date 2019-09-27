@@ -54,7 +54,7 @@ class Signup extends Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text style={styles.centerTitle}>Join Us</Text>
+                <Text style={styles.centerTitle}>Create Account</Text>
                 <TextInput style={styles.inputBox}
                 onChangeText={(username) => this.setState({username})}
                 placeholder="Username"
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inputBox: {
-        width: 300,
+        width: 290,
         backgroundColor: '#eeeeee', 
         borderRadius: 25,
         paddingHorizontal: 16,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 300,
-        backgroundColor: '#4f83cc',
+        backgroundColor: '#FF6700',
         borderRadius: 25,
         marginVertical: 10,
         paddingVertical: 12
@@ -121,9 +121,11 @@ const styles = StyleSheet.create({
     centerTitle: {
         color: "black",
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 25,
         textAlign: "center",
-        // fontFamily: "Pacifico-Regular"
+        marginTop: 20,
+        marginBottom: 8,
+        // fontFamily: ""
       },
 });
 

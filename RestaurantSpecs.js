@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 class RestaurantSpecs extends React.Component {
@@ -10,7 +10,9 @@ class RestaurantSpecs extends React.Component {
         
         return (
             <View>
-                <Card title={this.props.obj.name} >
+                <TouchableOpacity onPress={() => this.props.toggleHandler(this.props.obj)}>
+
+                <Card  title={this.props.obj.name} containerStyle={{borderColor: "orange", shadowRadius: 5}}>
 
                     <Text onPress={() => this.props.toggleHandler(this.props.obj)}>{this.props.obj.location}</Text>
                     <Text onPress={() => this.props.toggleHandler(this.props.obj)}></Text>
@@ -27,11 +29,12 @@ class RestaurantSpecs extends React.Component {
                     <Text></Text>
 
                     {this.props.favRestaurants.map(rest => rest.restaurant_id).includes(this.props.obj.restaurant_id) ? 
-                    <Button title="Already Favorited!"/> : 
-                    <Button onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "star", color: "white"}} />
-                    }
+                    <Button title="Already Favorited!" buttonStyle={{backgroundColor: "#FF6700", opacity: 0.4}} /> : 
+                    <Button raised onPress={() => this.props.addHandler(this.props.obj.restaurant_id)} title="Add to Favorites" icon={{name: "star", color: "white"}} buttonStyle={{backgroundColor: "#FF6700"}} />
+                }
 
                  </Card>
+                </TouchableOpacity>
             </View>
     
         )
@@ -40,7 +43,7 @@ class RestaurantSpecs extends React.Component {
 
 
 const styles = StyleSheet.create({
-
-    })
+    
+})
     
 export default RestaurantSpecs;

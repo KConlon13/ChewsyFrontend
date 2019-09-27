@@ -1,27 +1,34 @@
 import React from 'react'
-import { Picker, StyleSheet } from 'react-native'
+import { Picker, StyleSheet, View } from 'react-native'
 
 class Search extends React.Component {
+    state={
+        selectedAllergy: ''
+    }
+
+    async allergyChanger(itemValue) {
+       await this.setState({selectedAllergy: itemValue})
+    }
+
     render(){
         return (
-                <Picker 
-                style={styles.picker}
-                onChange={(e) => this.props.changeHandler(e.target.value)}
-                >
-                <Picker.Item label="Sort by Allergy" value="" />
+            <Picker 
+            selectedValue={this.state.selectedAllergy}
+            onValueChange={(itemValue, itemIndex)=> {
+                this.allergyChanger(itemValue).then(() => 
+                    this.props.changeHandler(this.state.selectedAllergy))
+            }}
+            itemStyle={{height:80, backgroundColor: "white", color: "#FF6700"}} >
+                <Picker.Item label="Sort Restaurants by Allergy:" value="" />
                 <Picker.Item label="Peanut-Friendly" value="peanut" />
-                <Picker.Item label="Gluten-Friendly" value="gluten" />
-                </Picker>
+                <Picker.Item label="Gluten-Friendly" value="gluten"  />
+                <Picker.Item label="Wheat-Friendly" value="wheat"  />
+                <Picker.Item label="Dairy-Friendly" value="dairy"  />
+                <Picker.Item label="Treenut-Friendly" value="treenut"  />
+                <Picker.Item label="Egg-Friendly" value="eggs"  />
+            </Picker>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    picker: {
-        height: -100,
-        width: 400,
-    }
-})
-
 
 export default Search;
